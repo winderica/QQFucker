@@ -20,7 +20,7 @@ class Hook : IXposedHookLoadPackage {
             .forEach {
                 XposedBridge.hookMethod(it, object : XC_MethodReplacement() {
                     override fun replaceHookedMethod(param: MethodHookParam): Any? {
-                        XposedBridge.log("QQFucker: fucked " + className + "." + it.name)
+                        XposedBridge.log("QQFucker: fucked $className.${it.name}")
                         return callback(param)
                     }
                 })
@@ -41,7 +41,8 @@ class Hook : IXposedHookLoadPackage {
             "kri" to "onClick",
             "krk" to "onClick",
             "krm" to "onClick",
-            "krg" to "onClick"
+            "krg" to "onClick",
+            "com.tencent.mobileqq.app.upgrade.UpgradeController" to "f"
         ).forEach { (key, value) -> filterAndHook(classLoader, key, { it?.name == value }) }
         filterAndHook(classLoader, "qhh", { it?.name == "a" && it.parameterCount == 8 }) {
             it?.let {
